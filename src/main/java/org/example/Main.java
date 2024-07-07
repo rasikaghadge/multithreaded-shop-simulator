@@ -1,17 +1,25 @@
 package org.example;
 
+import org.shop.entities.Cashier;
+import org.shop.entities.Customer;
+import org.shop.entities.Shop;
+import org.shop.entities.StockReplenisher;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Shop shop = new Shop();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        Thread customer1 = new Thread(new Customer("Customer 1", shop));
+        Thread customer2 = new Thread(new Customer("Customer 2", shop));
+        customer1.start();
+        customer2.start();
+
+        Thread cashier1 = new Thread(new Cashier("Cashier 1", shop));
+        cashier1.start();
+
+        Thread replenisher1 = new Thread(new StockReplenisher("Replenisher 1", shop));
+        replenisher1.start();
     }
 }
